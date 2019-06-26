@@ -1,0 +1,33 @@
+
+Transformers for known features¶
+
+You mentioned that you knew specific features that you wanted to associate with certain labels. FunctionTransformer is a useful preprocessing tool to help ensure the model recognizes these features.
+
+Web developer  ["html","css","php"]
+Developer      ["core","java","python"]
+Embedded Dev   ["ARM", "CORTEX", "C"]
+
+def contains_features(X, terms, label):
+    rows = X.shape[0]
+    results = np.zeros((rows, 1))
+    for i in range(rows):
+        value = X[i, 0]
+        if np.isin(value, terms):
+            results[i] = label
+    return results
+
+def contains_web_dev_features(X):
+    terms = ['html', 'css', 'php']
+    return contains_features(X, terms, 'web_dev')
+
+def contains_dev_features(X, y=None):
+    terms = ['html', 'css', 'php']
+    return contains_features(X, terms, 'dev')
+
+def contains_embed_features(X, y=None):
+    terms = ['arm', 'cortex', 'c']
+    return contains_features(X, terms, 'embed')
+
+('web_dev_features', FunctionTransformer(contains_web_dev_features, validate=False)),
+('dev_features', FunctionTransformer(contains_dev_features, validate=False)),
+('embed_features', FunctionTransformer(contains_embed_features, validate=False)),
