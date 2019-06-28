@@ -1,4 +1,4 @@
-## DocVec
+## Resume Classifier
 
 Read a .doc file, vectorize words, perform multinomial classification.
 
